@@ -3,7 +3,7 @@ sqt - a stock quote grabber in bash
 
 The script sqt crafts a url that is compatible with the yahoo finance csv request and gives you the data in return.  I've made it so that it reminds you of a few basic options that can be included in the url, but you should be able to include any from a site like this: http://www.canbike.org/information-technology/yahoo-finance-url-download-to-a-csv-file.html
 
-Roadmap:
+# Roadmap:
 
     [ ] I hope to have it display headings based on the l1,g,h etc.. options 
         at the top of the columns in comparative mode.
@@ -15,7 +15,7 @@ Roadmap:
         mainly because I am a lousy programmer.  I'd like it to ask for tickers until 
         it gets some special input, and then move along to the next task.
   
-Notes: 
+# Notes: 
 
   requires 
 
