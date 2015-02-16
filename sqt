@@ -1,0 +1,178 @@
+#!/bin/bash
+
+# Fetches stock quote info from Yahoo.
+
+# Input Functions
+#
+
+get_ticker(){
+        read -ep "Input Ticker: " ticker
+        }
+
+get_options(){
+        read -ep "Input Options: " options
+        }
+
+get_ticks(){
+        read -ep "How many stocks to compare: " ticks
+        }
+
+pause(){
+   read -p "Press any key to continue..."
+        }
+#
+# End Input Functions
+
+# --------------------------------------------
+
+# Curl Functions
+#
+
+figname(){
+        name=$(curl -s "http://download.finance.yahoo.com/d/quotes.csv?s=${ticker}&f=n")
+        figlet ${name}
+        }
+
+get_quotes(){
+        curl -s "http://download.finance.yahoo.com/d/quotes.csv?s=${ticker}&f=1${options}"|column -t -s','
+        }
+
+get_price(){
+        price=$(curl -s "http://download.finance.yahoo.com/d/quotes.csv?s=${ticker}&f=1l1"|column -t -s',')
+        figlet ${price}
+        }
+
+quick_price(){
+        curl -s "http://download.finance.yahoo.com/d/quotes.csv?s=${1}&f=1l1"|column -t -s','
+        }
+#
+# End Curl Functions
+
+# --------------------------------------------
+
+# Special Comparative Table Functions
+#
+
+tablebuilder(){
+        for ((x = 0; x < ${ticks}; x++)); do
+                get_ticker
+                get_quotes >> /tmp/output.tbl
+        done
+        }
+
+gentable(){
+        rm -rf /tmp/output.tbl
+        touch /tmp/output.tbl
+        }
+
+showtable(){
+        cat /tmp/output.tbl
+        }
+
+#
+# End Special Comparative Table Functions
+
+# --------------------------------------------
+
+# Some General Ouput Functions
+#
+
+options(){
+        echo "Data Options"
+        echo " "
+        echo "Last Trade        -       l1"
+        echo "Day's High        -       h"
+        echo "Day's Low -       g"
+        echo "Day's Range       -       m2"
+        echo "52-Week High      -       k"
+        echo "52-Week Low       -       j"
+        echo "50-day MA -       m3"
+        }
+
+space(){
+        echo " "
+        }
+
+hline() {
+        echo ""
+        COLS=$(tput cols) perl -e 'print "-" x $ENV{COLS};'
+        echo " "
+        }
+
+noinput(){
+        space
+        echo    "sqt - A program for getting stock info from Yahoo"
+        echo    "Usage - sqt [option]/[ticker]"
+        echo    "       -i      Interactive Mode"
+        echo    "       -l      Price Loop Mode"
+        echo    "       -c      Comparative Mode"
+        echo    "If you provide a ticker the price will be printed.*"
+        echo    "*This is a lie."
+        space
+        }
+
+#
+# END Some General Output Functions
+
+#--------------------------------------------
+
+comparative_mode(){
+        clear
+        hline
+        options
+        space
+        get_options
+        hline
+        get_ticks
+        hline
+        gentable
+        tablebuilder
+        hline
+        showtable
+        hline
+        }
+
+interactive_mode(){
+        clear
+        hline
+        get_ticker
+        hline
+        figname
+        options
+        hline
+        get_options
+        hline
+        get_quotes
+        hline
+        }
+
+priceloop(){
+        clear
+        get_ticker
+        hline
+        get_price
+        hline
+        pause
+        }
+
+priceloop_mode(){
+        while (true)
+                do
+                        priceloop
+                done
+        }
+
+quick_mode(){
+        quick_price
+        }
+
+case ${1} in
+        ""      ) noinput ;;
+        "-h"    ) noinput ;;
+        "--help") noinput ;;
+        "-?"    ) noinput ;;
+        "-i"    ) interactive_mode ;;
+        "-l"    ) priceloop_mode ;;
+        "-c"    ) comparative_mode ;;
+        *       ) quick_mode ;;
+esac
