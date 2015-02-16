@@ -102,12 +102,14 @@ hline() {
 noinput(){
         space
         echo    "sqt - A program for getting stock info from Yahoo"
-        echo    "Usage - sqt [option]/[ticker]"
+        space
+        echo    "Usage - sqt [option]"
+        space
         echo    "       -i      Interactive Mode"
         echo    "       -l      Price Loop Mode"
         echo    "       -c      Comparative Mode"
-        echo    "If you provide a ticker the price will be printed.*"
-        echo    "*This is a lie."
+        #    "If you provide a ticker as an argument, the price will be printed.*"
+        #    "*This is a lie. But I hope to make it work soon!"
         space
         }
 
