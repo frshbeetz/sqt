@@ -24,8 +24,9 @@ Notes:
     
   warnings
 
-    this software comes with no warranty or even an advisement to run it. it may burn down your home, 
-    kick your dog, or even sleep with your spouse, and i refuse to take responsibility if you execute it.
+    this software comes with no warranty or even an advisement to run it. it may: 
+    burn down your home, kick your dog, or even sleep with your spouse, 
+    and i refuse to take responsibility if you execute it.
     
     there exists specifically one "rm -rf /tmp/output.tbl" statement, 
     this is where comparative mode saves it's data, it removes the existing file as 
