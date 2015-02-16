@@ -18,7 +18,7 @@ get_ticks(){
         }
 
 pause(){
-   read -p "Press any key to continue..."
+   read -p "Press ENTER to continue or CTRL+C to quit...)"
         }
 #
 # End Input Functions
